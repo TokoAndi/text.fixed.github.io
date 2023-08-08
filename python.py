@@ -1,13 +1,25 @@
-def find_words(input_text, file_path):
-    with open(file_path, 'r') as f:
-        words = f.read().splitlines()
-    output_words = []
-    for word in words:
-        if input_text in word:
-            output_words.append(word)
-    return output_words
+with open("kbbi.txt") as f:
+    words = f.read().splitlines()
 
-input_text = 'TUAL'
-file_path = 'kbbi.txt'
-output_words = find_words(input_text, file_path)
-print(output_words)
+
+def find_matches(s):
+    matches = []
+    for word in words:
+        if all(word.count(c) == s.count(c) for c in set(s)) and len(word) <= len(s):
+            matches.append(word)
+    return matches
+
+
+while True:
+    s = input("Input: ")
+    if not s:
+        break
+    matches = find_matches(s)
+    if matches:
+        result = ""
+        for match in matches:
+            if len(match) <= len(s):
+                result += match + "\n"
+        print(result)
+    else:
+        print("Tidak ada hasil ditemukan")
