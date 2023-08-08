@@ -2,16 +2,38 @@
 <html>
   <head>
     <title>Python + HTML</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
     <h1>Python + HTML Integration</h1>
 
-    <form method="POST">
+    <form method="POST" onsubmit="return validateInput()">
       <input type="text" name="input_text" placeholder="Enter text" />
       <button type="submit">Process</button>
     </form>
 
+    {% if error_message %}
+    <p class="error">{{ error_message }}</p>
+    {% endif %}
+
     <h2>Result:</h2>
-    <p>{{ result }}</p>
+    <p class="result">{{ result }}</p>
+
+    <script>
+      function validateInput() {
+        var inputElement = document.getElementsByName("input_text")[0];
+        var inputValue = inputElement.value;
+
+        if (inputValue.includes(" ")) {
+          alert("Input tidak boleh mengandung spasi tolong hapus spasi");
+          return false;
+        }
+
+        return true;
+      }
+    </script>
   </body>
 </html>
